@@ -10,16 +10,79 @@ Create two AWS Linux EC2 instances
 1. kub-master (t2.medium)
 2. kub-worker (t2.medium)
 
-## Installation
+## Installation And Kubeadm Setup
 
-To install and run the application on your Kubernetes cluster, follow these steps:
+1. Paste the bellow commands in both (kub-master and kub-worker)
+```
+sudo su
+apt update -y
+apt install docker.io -y
 
-1. Clone this repository to your local machine.
-2. Navigate to the project root directory.
-3. Create a Kubernetes deployment and service by running the following command:
+systemctl start docker
+systemctl enable docker
 
-`kubectl apply -f kubernetes.yaml`
+curl -fsSL "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg
+echo 'deb https://packages.cloud.google.com/apt kubernetes-xenial main' > /etc/apt/sources.list.d/kubernetes.list
 
-4. Verify that the deployment and service have been created successfully by running the following command:
+apt update -y
+apt install kubeadm=1.20.0-00 kubectl=1.20.0-00 kubelet=1.20.0-00 -y
+```
 
-`kubectl get deployments,services`
+2. Paste the bellow commands in kub-master
+```
+sudo su
+kubeadm init
+export KUBECONFIG=/etc/kubernetes/admin.conf
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+```
+
+3. Paste the bellow commands in kub-worker
+```
+sudo su
+```
+Take the command from kub-master like below and paste it in the kub-worker
+```
+kubeadm join 172.31.86.8:6443 --token 0zgde9.n73cvv13wptarbin \
+    --discovery-token-ca-cert-hash sha256:02110290e76806b616c13d56be0e6d229a53e58521e6c724c53f6213617c15d1 --v=5
+```
+
+4. Paste the bellow commands in kub-master
+```
+kubectl get nodes
+git clone https://github.com/shubhzzz19/kubeadm-flask-mongodb-cluster.git
+```
+
+5. Move to the k8s directory with command below
+```
+cd kubeadm-flask-mongodb-cluster/flask-api/k8s
+```
+
+6. Deploy the app and its service by the below commands
+```
+kubectl apply -f taskmaster.yml
+kubectl scale --replicas=3 deployment/taskmaster
+kubectl get pods
+kubectl apply -f taskmaster-svc.yml
+kubectl get svc taskmaster-svc
+```
+
+7. Create a Persistant volume by the below commands
+```
+kubectl apply -f mongo-pv.yml
+kubectl get pv mongo-pv
+kubectl apply -f mongo-pvc.yml
+kubectl get pv mongo-pv
+```
+
+8. Create the MongoDB pod and its service 
+```
+kubectl apply -f mongo-pv.yml
+kubectl get pv mongo-pv
+kubectl apply -f mongo-pvc.yml
+kubectl get pv mongo-pv
+kubectl apply -f mongo.yml
+kubectl get pods
+kubectl scale --replicas=2 deployment/<mongo-pod-name>
+```
+
+That's it ! Now your application is successfully deployed in the Kubernetes CLuster using kubeadm
