@@ -22,22 +22,3 @@ To install and run the application on your Kubernetes cluster, follow these step
 4. Verify that the deployment and service have been created successfully by running the following command:
 
 `kubectl get deployments,services`
-
-5. If everything is working properly, you should see the name of your deployment and service listed in the output.
-
-## Usage
-
-To use the microservice, you can send HTTP requests to the service's endpoint. Here's an example request:
-
-`curl http://<service-ip>:<service-port>/tasks`
-
-
-This should return a JSON response with a greeting message.
-
-## Contributing
-
-If you'd like to contribute to this project, please fork the repository and create a new branch. Pull requests are welcome!
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md]
