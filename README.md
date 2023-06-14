@@ -1,7 +1,14 @@
 # Kubernetes Microservice Cluster Flask Application With MongoDB  
 
 This is a microservice application built using Flask and deployed on Kubernetes. It is designed to demonstrate how to build and deploy microservices on a Kubernetes cluster.
+
 ![K8s Cluster](https://github.com/shubhzzz19/kubeadm-flask-mongodb-cluster/assets/73218792/880988e7-0fcd-422b-8742-ae725ab54375)
+
+## Requirements
+
+Create 2 AWS Linux EC2 
+  a. kub-master (t2.medium)
+  b. kub-worker (t2.medium)
 
 ## Installation
 
