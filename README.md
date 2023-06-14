@@ -7,8 +7,8 @@ This is a microservice application built using Flask and deployed on Kubernetes.
 ## Requirements
 
 Create two AWS Linux EC2 instances 
-a. kub-master (t2.medium)
-b. kub-worker (t2.medium)
+1. kub-master (t2.medium)
+2. kub-worker (t2.medium)
 
 ## Installation
 
