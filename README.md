@@ -1,5 +1,12 @@
 # Kubernetes Microservice Cluster Flask Application With MongoDB  
 
+1. Established Kubernetes Cluster using kubeadm on AWS EC2.
+2. Deployed the Taskmaster on Micro-service.
+3. Exposed the service to the Postman.
+4. Integrated Presistent Volume and Presistent Volume Claim.
+5. Deployed MongoDB.
+6. Integrated Micro-services and implemented troubleshooting. 
+
 This is a microservice application built using Flask and deployed on Kubernetes. It is designed to demonstrate how to build and deploy microservices on a Kubernetes cluster.
 
 ![K8s Cluster](https://github.com/shubhzzz19/kubeadm-flask-mongodb-cluster/assets/73218792/880988e7-0fcd-422b-8742-ae725ab54375)
